@@ -1,0 +1,8 @@
+:root{
+  /* 遮罩组件配置 */
+  --orange-overlay-zIndexed: 999;
+  --orange-overlay-bg-color: rgba(0, 0, 0, 0.7);
+  /* popup组件配置 */
+  --orange-popup-bg-color: #fff;
+  --orange-popup-transition: transform 3s;
+}
