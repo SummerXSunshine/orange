@@ -1,22 +1,29 @@
 <template>
-  <div class="toll-container">
+  <div class="toll-container" ref="tollcontainer">
     <input v-model='hex'/>
     <orangeButton :displayText="'转换'" @orange-button-click="hexToRgb"></orangeButton>
     <div :style="composeStyle">{{rgb}}</div>
+    <orangeButton :displayText="'点击截图'" @orange-button-click="screenShot"></orangeButton>
+    <screenShot v-show="isShow"></screenShot>
   </div>
 </template>
 
 <script>
-import orangeButton from "../components/orange-button.vue"
+import orangeButton from "../components/orange-button.vue";
+import screenShot from '../screenShot/screenShot.vue'
+import ScreenShotPlugin from '../screenShot/main'
 export default {
   name: 'toll',
   components: {
     orangeButton,
+    screenShot,
   },
   data() {
     return {
       hex: '#e93030',
       rgb: '结果',
+      isShow: false,
+      test: null,
     }
   },
   computed:{
@@ -33,6 +40,15 @@ export default {
       const rgbRes = `rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})`;
       this.rgb = rgbRes;
       console.log(`rgb(${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)})`)
+    },
+    screenShot(){
+      this.isShow = true;
+      if(!this.test) {
+        this.test = new ScreenShotPlugin();
+        this.test.load();
+      } else {
+        this.test.load();
+      }
     }
   }
 }
