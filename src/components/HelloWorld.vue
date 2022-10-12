@@ -6,18 +6,33 @@
     <div class="button" @click="openRightPopup">打开右侧遮罩</div>
     <orangeOverlay v-show="showOverlay" @click="closeOverlay"></orangeOverlay>
     <orange-popup v-show="showOverlay" :style="popupStyle" :position="dir"></orange-popup>
+    <orangeCenterXy class="demo-card"></orangeCenterXy>
+    <div>二列均分</div>
+    <orangeTwoCol></orangeTwoCol>
+    <div>三列均分，2定宽1自适应</div>
+    <orange-three-col></orange-three-col>
+    <div>竖直均分</div>
+    <orangeTwoRow></orangeTwoRow>
   </div>
 </template>
 
 <script>
 import orangeOverlay from './orange-overlay.vue';
-import orangePopup from './orange-popup.vue'
+import orangePopup from './orange-popup.vue';
+import orangeCenterXy from '../flow/orange-center-xy.vue';
+import orangeTwoCol from '../flow/orange-two-col.vue';
+import orangeThreeCol from '../flow/orange-three-col.vue';
+import orangeTwoRow from '../flow/orange-two-row.vue';
 
 export default {
   name: 'HelloWorld',
   components: {
     orangeOverlay,
     orangePopup,
+    orangeCenterXy,
+    orangeTwoCol,
+    orangeThreeCol,
+    orangeTwoRow,
   },
   data() {
     return {
@@ -66,4 +81,5 @@ export default {
   padding: 10px 10px;
   border-radius: 4px;
 }
+
 </style>
