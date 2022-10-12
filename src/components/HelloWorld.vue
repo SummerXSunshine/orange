@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <orangeSwitch v-model="switchModel"></orangeSwitch>
     <div class="button" @click="openTopPopup">打开顶部遮罩</div>
     <div class="button" @click="openLeftPopup">打开左侧遮罩</div>
     <div class="button" @click="openBottomPopup">打开底部遮罩</div>
@@ -17,6 +18,7 @@
 </template>
 
 <script>
+import orangeSwitch from './switch/orange-switch.vue';
 import orangeOverlay from './orange-overlay.vue';
 import orangePopup from './orange-popup.vue';
 import orangeCenterXy from '../flow/orange-center-xy.vue';
@@ -27,6 +29,7 @@ import orangeTwoRow from '../flow/orange-two-row.vue';
 export default {
   name: 'HelloWorld',
   components: {
+    orangeSwitch,
     orangeOverlay,
     orangePopup,
     orangeCenterXy,
@@ -36,6 +39,7 @@ export default {
   },
   data() {
     return {
+      switchModel: false,
       showOverlay: false,
       dir: '',
     }
