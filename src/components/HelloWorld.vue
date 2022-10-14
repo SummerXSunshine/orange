@@ -14,6 +14,9 @@
     <orange-three-col></orange-three-col>
     <div>竖直均分</div>
     <orangeTwoRow></orangeTwoRow>
+    <cardSwipe>
+      <cardPane v-for="(item, index) in swipeData" :key="index">{{item}}</cardPane>
+    </cardSwipe>
   </div>
 </template>
 
@@ -26,6 +29,9 @@ import orangeTwoCol from '../flow/orange-two-col.vue';
 import orangeThreeCol from '../flow/orange-three-col.vue';
 import orangeTwoRow from '../flow/orange-two-row.vue';
 
+import cardSwipe from './swiper/card-swipe.vue';
+import cardPane from './swiper/card-pane.vue';
+
 export default {
   name: 'HelloWorld',
   components: {
@@ -36,12 +42,17 @@ export default {
     orangeTwoCol,
     orangeThreeCol,
     orangeTwoRow,
+    // 轮播组件
+    cardSwipe,
+    cardPane
   },
   data() {
     return {
       switchModel: false,
       showOverlay: false,
       dir: '',
+      swipeIndex: 0,
+      swipeData: [1,2,3,4,5]
     }
   },
   computed: {
@@ -85,5 +96,8 @@ export default {
   padding: 10px 10px;
   border-radius: 4px;
 }
-
+.card-bg {
+  width: 375px;
+  height: 300px;
+}
 </style>
