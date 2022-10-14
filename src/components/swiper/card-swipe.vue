@@ -20,8 +20,7 @@ export default {
 			default: 0.2,
 			type: Number,
 		},
-		modelValue: {
-		},
+        modelValue: {},
 		height: {
 			default: 'auto',
 			type: String,
@@ -39,7 +38,7 @@ export default {
             default: true,
         },
         carouselDuration: {
-            default: 600,
+            default: 6000,
         },
 	},
 	data() {

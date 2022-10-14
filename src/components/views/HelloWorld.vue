@@ -19,20 +19,26 @@
         <div class="card-bg">{{item}}</div>
       </cardPane>
     </cardSwipe>
+    <orangeCollapseList :listData="collapseData">
+      <template slot="list-item" slot-scope="slotProps">
+        <div classs="test-list-item">{{slotProps.item}}</div>
+      </template>
+    </orangeCollapseList>
   </div>
 </template>
 
 <script>
-import orangeSwitch from './switch/orange-switch.vue';
-import orangeOverlay from './orange-overlay.vue';
-import orangePopup from './orange-popup.vue';
-import orangeCenterXy from '../flow/orange-center-xy.vue';
-import orangeTwoCol from '../flow/orange-two-col.vue';
-import orangeThreeCol from '../flow/orange-three-col.vue';
-import orangeTwoRow from '../flow/orange-two-row.vue';
+import orangeSwitch from '@/components/switch/orange-switch.vue';
+import orangeOverlay from '@/components/orange-overlay.vue';
+import orangePopup from '@/components/orange-popup.vue';
+import orangeCenterXy from '@/flow/orange-center-xy.vue';
+import orangeTwoCol from '@/flow/orange-two-col.vue';
+import orangeThreeCol from '@/flow/orange-three-col.vue';
+import orangeTwoRow from '@/flow/orange-two-row.vue';
 
-import cardSwipe from './swiper/card-swipe.vue';
-import cardPane from './swiper/card-pane.vue';
+import cardSwipe from '@/components/swiper/card-swipe.vue';
+import cardPane from '@/components/swiper/card-pane.vue';
+import orangeCollapseList from '@/components/collapseList/orange-collapse-list.vue'
 
 export default {
   name: 'HelloWorld',
@@ -46,7 +52,9 @@ export default {
     orangeTwoRow,
     // 轮播组件
     cardSwipe,
-    cardPane
+    cardPane,
+    // 折叠卡片组件
+    orangeCollapseList,
   },
   data() {
     return {
@@ -54,7 +62,8 @@ export default {
       showOverlay: false,
       dir: '',
       swipeIndex: 0,
-      swipeData: [1,2,3,4,5]
+      swipeData: [1,2,3,4,5],
+      collapseData: ['one', 'two', 'three'],
     }
   },
   computed: {
@@ -105,5 +114,10 @@ export default {
   align-items: center;
   justify-content: center;
   background: red;
+}
+.test-list-item{
+  height: 20px;
+  display: flex;
+  align-items: center;
 }
 </style>

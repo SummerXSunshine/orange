@@ -19,9 +19,6 @@ export default {
             }
         },
     },
-    mounted() {
-        console.log(this.cardWidth);
-    }
 }
 </script>
 <style scoped>
