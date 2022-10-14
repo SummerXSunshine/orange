@@ -14,8 +14,10 @@
     <orange-three-col></orange-three-col>
     <div>竖直均分</div>
     <orangeTwoRow></orangeTwoRow>
-    <cardSwipe>
-      <cardPane v-for="(item, index) in swipeData" :key="index">{{item}}</cardPane>
+    <cardSwipe v-model="swipeIndex" :cardWidth="375" :tabNumAct="swipeData.length">
+      <cardPane :cardWidth="375" v-for="(item, index) in swipeData" :key="index">
+        <div class="card-bg">{{item}}</div>
+      </cardPane>
     </cardSwipe>
   </div>
 </template>
@@ -99,5 +101,9 @@ export default {
 .card-bg {
   width: 375px;
   height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: red;
 }
 </style>

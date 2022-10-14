@@ -15,14 +15,12 @@
 <script>
 export default {
 	name: 'card-swipe',
-	porps: {
+	props: {
 		sensitivity: {
 			default: 0.2,
 			type: Number,
 		},
-		value: {
-			default: 0,
-			type: Number,
+		modelValue: {
 		},
 		height: {
 			default: 'auto',
@@ -35,10 +33,19 @@ export default {
         tabNumAct: {
             type: Number,
             default: 0,
-        }
+        },
+        // 自动轮播相关配置
+        carousel: {
+            default: true,
+        },
+        carouselDuration: {
+            default: 600,
+        },
 	},
 	data() {
 		return {
+            // 自动轮播定时器
+            carousleTimer: null,
 			startX: 0,
 			startY: 0,
 			firstMoveX: 0,
@@ -55,13 +62,30 @@ export default {
             return this.tabNumAct || this.$children.length;
 		},
 		tabPosition() {
-			return -this.value * this.cardWidth + this.tempMoveX;
+			return -this.modelValue * this.cardWidth + this.tempMoveX;
 		},
 	},
 	methods: {
+        setCarouselTimer() {
+            if(this.carousel) {
+                this.carouselTimer = setInterval(() => {
+                    if(this.modelValue + 1 < this.tabNumAct) {
+                        this.$emit('update:modelValue', this.modelValue + 1);
+                    } else {
+                        this.$emit('update:modelValue', 0);
+                    }
+                }, this.carouselDuration);
+            }
+        },
+        clearCarouselTimer() {
+            if(this.carouselTimer) {
+                clearInterval(this.carouselTimer);
+            }
+        },
 		touchStart(e) {
-			this.startX = e.changeedTouches[0].pageX;
-			this.startY = e.changeedTouches[0].pageY;
+            this.clearCarouselTimer();
+			this.startX = e.changedTouches[0].pageX;
+			this.startY = e.changedTouches[0].pageY;
 			this.firstMoveX = 0;
 			this.firstMoveY = 0;
 			this.banAnimation = true;
@@ -69,15 +93,16 @@ export default {
 			this.direction = 0;
 		},
 		touchMove(e) {
+            this.clearCarouselTimer();
 			const moveX = e.changedTouches[0].pageX - this.startX;
-			this.firstMoveX = e.changeTouches[0].pageY - this.startX;
-			this.firstMoveY = e.changeTouches[0].pageY - this.startY;
+			this.firstMoveX = e.changedTouches[0].pageY - this.startX;
+			this.firstMoveY = e.changedTouches[0].pageY - this.startY;
 
 			if (!this.isDragging) {
 				this.isDragging = true;
 				this.direction = Math.abs(this.firstMoveX) - Math.abs(this.firstMoveY);
 				if (this.direction > 0) {
-					this.emit('on-drag-start');
+					this.$emit('on-drag-start');
 				}
 			}
 
@@ -88,12 +113,13 @@ export default {
 			}
 		},
 		touchEnd() {
+            this.setCarouselTimer();
 			if (this.direction > 0) { // 发生了x方向的移动
 				if (this.tempMoveX === 0) { // 说明移动未成功
-					this.$emit('on-change-end', this.value);
+					this.$emit('on-change-end', this.modelValue);
 				}
 				this.tempMoveX = 0;
-				this.emit('input', this.tempCurrent);
+				this.$emit('update:modelValue', this.tempCurrent);
 			}
 			this.banAnimation = false;
 		},
@@ -113,11 +139,11 @@ export default {
 				this.tempCurrent = current;
 			}
 
-			if (this.tempMoveX <= -(moveNum - this.value) * this.cardWidth) {
-				this.tempMoveX = -(moveNum - this.value) * this.cardWidth;
+			if (this.tempMoveX <= -(moveNum - this.modelValue) * this.cardWidth) {
+				this.tempMoveX = -(moveNum - this.modelValue) * this.cardWidth;
 			} 
-			if (this.tempMoveX >= this.value * this.cardWidth) {
-				this.tempMoveX = this.value * this.cardWidth;
+			if (this.tempMoveX >= this.modelValue * this.cardWidth) {
+				this.tempMoveX = this.modelValue * this.cardWidth;
 			}
 		},
 		computedCurrent(moveX) {
@@ -127,13 +153,16 @@ export default {
 			const lastMoveX = Math.abs(moveX) % this.cardWidth;
 			const index = Math.floor(Math.abs(moveX) / this.cardWidth);
 			if (lastMoveX > this.cardWidth * this.sensitivity) { // 滑动距离大于页卡的1/5
-				current = this.value + direction * (index + 1);
+				current = this.modelValue + direction * (index + 1);
 			} else {
-				current = this.vlaue + direction * index;
+				current = this.modelValue + direction * index;
 			}
 			return current;
 		}
-	}
+	},
+    mounted() {
+        this.setCarouselTimer();
+    }
 }
 </script>
 

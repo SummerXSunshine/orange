@@ -6,18 +6,21 @@
 <script>
 export default {
     name: 'card-pane',
+    props: {
+        cardWidth: {
+            default: 200,
+			type: Number,
+        }
+    },
     computed: {
         composePaneStyle() {
             return {
                 width: `${this.cardWidth}px`,
             }
         },
-        cardWidth() {
-            return this.$parent.cardWidth;
-        }
     },
     mounted() {
-        console.log(this.$parent);
+        console.log(this.cardWidth);
     }
 }
 </script>
