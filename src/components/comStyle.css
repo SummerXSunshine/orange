@@ -7,7 +7,9 @@
   --orange-popup-transition: transform 3s;
 }
 
-
+ol, ul, li {
+  list-style: none;
+}
 
 .demo-card{
   background: #ebebeb;
