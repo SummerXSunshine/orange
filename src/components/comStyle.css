@@ -6,3 +6,19 @@
   --orange-popup-bg-color: #fff;
   --orange-popup-transition: transform 3s;
 }
+
+ol, ul, li {
+  list-style: none;
+}
+
+.demo-card{
+  background: #ebebeb;
+  width: 300px;
+  height: 300px;
+}
+.blue-bg{
+  background: rgb(89, 127, 198);
+}
+.light-bg{
+  background: rgb(160, 101, 101);
+}
